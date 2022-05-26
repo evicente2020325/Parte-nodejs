@@ -8,7 +8,7 @@ function agregarEmpresa(req, res){
     if(parametros.nombreEmpresa){
 
         modeloEmpresa.nombreEmpresa = parametros.nombreEmpresa;
-        //modeloEmpresa.idAdmin = req.user.sub;
+        modeloEmpresa.idAdmin = req.user.sub;
 
         modeloEmpresa.save((err, empresaGuardad) =>{
 
@@ -32,12 +32,12 @@ function editarEmpresa(req, res){
     delete parametros.password;
     delete parametros.rol;
  
-    empresa.findByIdAndUpdate(idempresa, parametros, {new: true}, (err, AlumnoEditado) =>{
+    empresa.findByIdAndUpdate(idempresa, parametros, {new: true}, (err, empresaEditado) =>{
    
          if(err) return res.status(500).send({ mensaje: "error en la petcion"})
-         if(!AlumnoEditado) return res.status(500). send({mensaje: "erro al editar la empresa"});
+         if(!empresaEditado) return res.status(500). send({mensaje: "erro al editar la empresa"});
  
-         return res.status(200).send({ usuario: empresaEditado})
+         return res.status(200).send({ empresa: empresaEditado})
      })
 
 }
@@ -65,7 +65,17 @@ function obtenerEmpresa(req, res){
     })
 }
 
+function obtenerEmpresaId(req, res){
+    const idEmpresa = req.params.idEmpresa; 
 
+    empresa.find({_id: idEmpresa}, (err, empresaEncontrada)=>{
+        if(err) return res.status(500).send({mensaje: "Error en la peticion"})
+        if(!empresaEncontrada) return res.status(404).send({mensaje: 'Error al obtener la empresa'})
+
+        return res.status(200).send({empresa: empresaEncontrada[0]})
+    })
+
+}
 
 
 
@@ -74,6 +84,7 @@ module.exports ={
     obtenerEmpresa,
     agregarEmpresa,
     editarEmpresa,
-    eliminarEmpresa
+    eliminarEmpresa,
+    obtenerEmpresaId
 
 }
