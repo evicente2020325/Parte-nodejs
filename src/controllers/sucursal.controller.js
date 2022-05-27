@@ -72,9 +72,20 @@ function agregarProductoASucursal(req, res) {
 
 }
 
+function obtenerSucursal(req, res){
+     
+    Sucursal.find({}, (err, sucursalEncontrada) =>{
+        if(err) return res.status(500).send({ mensaje: "error al obtener"});
+        if(!sucursalEncontrada) return res.status(500).send({mensaje : "error al obtener sucursal"});
+
+        return res.status(200).send({ sucursal: sucursalEncontrada})
+    })
+}
+
 module.exports = {
     agregarSucursal,
     editarSucursal,
     eliminarSucursal,
-    agregarProductoASucursal
+    agregarProductoASucursal,
+    obtenerSucursal
 }

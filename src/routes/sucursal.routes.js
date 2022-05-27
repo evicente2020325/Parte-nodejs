@@ -10,5 +10,6 @@ api.post('/agregarSucursal', controlSucursal.agregarSucursal);
 api.put('/editarSucursal/:idSucursal', controlSucursal.editarSucursal)
 api.delete('/eliminarSucursal/:idSucursal', controlSucursal.eliminarSucursal)
 api.put('/agregarProducto/:idSucursal', controlSucursal.agregarProductoASucursal)
+api.get('/obtenerSucursal', controlSucursal.obtenerSucursal)
 
 module.exports = api;
